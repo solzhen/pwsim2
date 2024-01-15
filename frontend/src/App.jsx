@@ -3,6 +3,7 @@ import { WrestlersPage } from './pages/WrestlersPage';
 import { WrestlerFormPage } from './pages/WrestlerFormPage';
 import { WrestlerDetailPage } from './pages/WrestlerDetailPage';
 import { Navigation } from './components/NavigationComponent';
+import { CompaniesPage } from './pages/CompaniesPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/wrestlers" element={<WrestlersPage />} />
         <Route path="/wrestler-create" element={<WrestlerFormPage />} />
         <Route path="/wrestlers/:id" element={<WrestlerDetailPage />} />
+        <Route path="/companies" element={<CompaniesPage />} />
       </Routes>
     </BrowserRouter>
   );

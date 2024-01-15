@@ -6,12 +6,14 @@ from .consts import MONTH_CHOICES, RELATIONSHIP_CHOICES, STYLE_CHOICES as style_
 
 class Wrestler(models.Model):
     name = models.CharField(max_length=50)
+    gender = models.CharField(max_length=20, choices=[
+        ('male', 'Male'), ('female', 'Female'), ('other', 'Other')], default='male')
     year_of_birth = models.PositiveIntegerField()
     month_of_birth = models.PositiveIntegerField(choices=MONTH_CHOICES)
     height = models.IntegerField()
     weight = models.IntegerField()
     finisher = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = models.ImageField(upload_to='people/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     style = models.CharField(
@@ -81,6 +83,7 @@ class WrestlerRelation(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    image = models.ImageField(upload_to='companies/', null=True, blank=True)
     year_of_founding = models.PositiveIntegerField()
     month_of_founding = models.PositiveIntegerField(choices=MONTH_CHOICES)
     status = models.PositiveSmallIntegerField(

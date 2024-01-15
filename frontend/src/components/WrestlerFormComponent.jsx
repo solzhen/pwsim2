@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 
 const WrestlerFormComponent = () => {
     const [name, setName] = useState('');
+    const [gender, setGender] = useState('');
     const [yearOfBirth, setYearOfBirth] = useState('');
     const [monthOfBirth, setMonthOfBirth] = useState('');
     const [height, setHeight] = useState('');
@@ -75,7 +76,7 @@ const WrestlerFormComponent = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 p-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-slate-400">
                         Name
@@ -89,6 +90,24 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setName(event.target.value)}
                             className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                         />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor='gender' className="block text-sm font-medium text-slate-400">
+                        Gender
+                    </label>
+                    <div className="mt-1">
+                        <select
+                            id='gender'
+                            name='gender'
+                            value={gender}
+                            onChange={(event) => setGender(event.target.value)}
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                        >
+                            <option value="male">Male</option>
+                            <option value='female'>Female</option>
+                            <option value='other'>Other</option>
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -123,7 +142,7 @@ const WrestlerFormComponent = () => {
                 </div>
                 <div>
                     <label htmlFor="height" className="block text-sm font-medium text-slate-400">
-                        Height
+                        Height (cm.)
                     </label>
                     <div className="mt-1">
                         <input
@@ -138,7 +157,7 @@ const WrestlerFormComponent = () => {
                 </div>
                 <div>
                     <label htmlFor="weight" className="block text-sm font-medium text-slate-400">
-                        Weight
+                        Weight (Kg.)
                     </label>
                     <div className="mt-1">
                         <input
@@ -458,7 +477,7 @@ const WrestlerFormComponent = () => {
 
                         />
                     </div>
-                </div>
+                </div>                
             </div>
             <button className="bg-red-500 p-3 rounded-lg w-48 mt-3" type="submit">Submit</button>
         </form>

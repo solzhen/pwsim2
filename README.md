@@ -3,7 +3,7 @@ Another pro wrestling sim but using django+react+tailwind, made for practice
 
 ## Prerequisites
 
-- Python (version 3+)
+- Python (version 3+) & Pip
 - Django (version 16+)
 - Node.js
 - npm (Node Package Manager)

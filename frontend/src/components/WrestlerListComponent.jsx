@@ -21,7 +21,7 @@ const WrestlerList = () => {
 
     return (
         <div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-3 m-2">
                 {wrestlers.map(wrestler => (
                     <WrestlerCard key={wrestler.id} wrestler={wrestler} />
                 ))}
