@@ -1,6 +1,3 @@
-# Project Name
-
-A brief description of the project.
 
 ## Prerequisites
 
@@ -49,7 +46,10 @@ A brief description of the project.
 
 ## Configuration
 
-1. Rename the `.env.example` file to `.env` and update the necessary environment variables.
+1. Navigate to the frontend folder:
+    ```bash
+    cd frontend
+    ```
 
 2. Run database migrations:
 
@@ -58,6 +58,12 @@ A brief description of the project.
     ```
 
 ## Usage
+
+Navigate to the frontend folder if you're not there already:
+    ```bash
+    cd frontend
+    ```
+
 
 To start the development server, run the following command:
 

@@ -1,8 +1,39 @@
-# React + Vite
+# Frontend React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a front-end React app that requires certain steps to be followed in order to run it successfully.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Before running the app, make sure you have the following installed on your machine:
+
+- Node.js
+- npm (Node Package Manager)
+
+## Installation
+
+1. Clone the repository to your local machine:
+
+    ```bash
+    git clone https://github.com/solzhen/pwsim2/tree/main
+    ```
+
+2. Navigate to the project directory and then the frontend directory:
+
+    ```bash
+    cd pwsim2
+    cd frontend
+    ```
+
+3. Install the required dependencies:
+
+    ```bash
+    npm install
+    ```
+
+## Running the App
+
+To start the app, run the following command:
+
+    ```bash
+    npm run dev
+    ```
