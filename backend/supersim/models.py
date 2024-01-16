@@ -30,12 +30,17 @@ class Wrestler(models.Model):
     charisma = models.PositiveSmallIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
     acting = models.PositiveSmallIntegerField(
-        validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
-    physique = models.PositiveSmallIntegerField(
-        validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
+        validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)    
     stamina = models.PositiveSmallIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
     power = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
+    # appearance
+    sex_appeal = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
+    intimidating = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
+    star_quality = models.PositiveSmallIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
     # off-ring stats
     referee = models.PositiveSmallIntegerField(

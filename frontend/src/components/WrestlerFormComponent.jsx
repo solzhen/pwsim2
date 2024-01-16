@@ -19,7 +19,12 @@ const WrestlerFormComponent = () => {
     const [psychology, setPsychology] = useState(50);
     const [charisma, setCharisma] = useState(50);
     const [acting, setActing] = useState(50);
-    const [physique, setPhysique] = useState(50);
+
+    // const [physique, setPhysique] = useState(50);
+    const [sex_appeal, setSexAppeal] = useState(50);
+    const [intimidating, setIntimidating] = useState(50);
+    const [star_quality, setStarQuality] = useState(50);
+
     const [stamina, setStamina] = useState(50);
     const [power, setPower] = useState(50);
     const [referee, setReferee] = useState(50);
@@ -39,6 +44,7 @@ const WrestlerFormComponent = () => {
 
         const formData = new FormData();
         formData.append('name', name);
+        formData.append('gender', gender);
         formData.append('year_of_birth', yearOfBirth);
         formData.append('month_of_birth', monthOfBirth);
         formData.append('height', height);
@@ -52,7 +58,9 @@ const WrestlerFormComponent = () => {
         formData.append('psychology', psychology);
         formData.append('charisma', charisma);
         formData.append('acting', acting);
-        formData.append('physique', physique);
+        formData.append('sex_appeal', sex_appeal);
+        formData.append('intimidating', intimidating);
+        formData.append('star_quality', star_quality);
         formData.append('stamina', stamina);
         formData.append('power', power);
         formData.append('referee', referee);
@@ -103,7 +111,7 @@ const WrestlerFormComponent = () => {
                             value={gender}
                             onChange={(event) => setGender(event.target.value)}
                             className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-                        >
+                        >                            
                             <option value="male">Male</option>
                             <option value='female'>Female</option>
                             <option value='other'>Other</option>
@@ -129,7 +137,7 @@ const WrestlerFormComponent = () => {
                     <label htmlFor="month_of_birth" className="block text-sm font-medium text-slate-400">
                         Month of Birth
                     </label>
-                    <div className="mt-1">
+                    {/* <div className="mt-1">
                         <input
                             type="number"
                             name="month_of_birth"
@@ -138,6 +146,29 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setMonthOfBirth(event.target.value)}
                             className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                         />
+                    </div> */}
+                    <div className="mt-1">
+                        <select
+                            id="month_of_birth"
+                            name="month_of_birth"
+                            value={monthOfBirth}
+                            onChange={(event) => setMonthOfBirth(event.target.value)}
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                        >
+                            <option value={1}>January</option>
+                            <option value={2}>February</option>
+                            <option value={3}>March</option>
+                            <option value={4}>April</option>
+                            <option value={5}>May</option>
+                            <option value={6}>June</option>
+                            <option value={7}>July</option>
+                            <option value={8}>August</option>
+                            <option value={9}>September</option>
+                            <option value={10}>October</option>
+                            <option value={11}>November</option>
+                            <option value={12}>December</option>
+
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -195,7 +226,7 @@ const WrestlerFormComponent = () => {
                             name="image"
                             id="image"
                             onChange={(event) => setImage(event.target.files[0])}
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="text-slate-500 shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                         />
                     </div>
                 </div>
@@ -239,7 +270,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setBrawl(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             required
                         />
                     </div>
@@ -257,7 +288,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setTechnical(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             required
                         />
                     </div>
@@ -275,7 +306,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setAerial(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             required
                         />
                     </div>
@@ -293,7 +324,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setPsychology(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             required
                         />
                     </div>
@@ -311,7 +342,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setCharisma(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             required
                         />
                     </div>
@@ -329,26 +360,59 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setActing(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             required
                         />
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="physique" className="block text-sm font-medium text-slate-400">
-                        Physique
+                    <label htmlFor="sex_appeal" className="block text-sm font-medium text-slate-400">
+                        Sex Appeal
                     </label>
                     <div className="mt-1">
                         <input
                             type="number"
-                            name="physique"
-                            id="physique"
-                            value={physique}
-                            onChange={(event) => setPhysique(event.target.value)}
+                            name="sex_appeal"
+                            id="sex_appeal"
+                            value={sex_appeal}
+                            onChange={(event) => setSexAppeal(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor="intimidating" className="block text-sm font-medium text-slate-400">
+                        Intimidating
+                    </label>
+                    <div className="mt-1">
+                        <input
+                            type="number"
+                            name="intimidating"
+                            id="intimidating"
+                            value={intimidating}
+                            onChange={(event) => setIntimidating(event.target.value)}
+                            min="0"
+                            max="100"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor="star_quality" className="block text-sm font-medium text-slate-400">
+                        Star Quality
+                    </label>
+                    <div className="mt-1">
+                        <input
+                            type="number"
+                            name="star_quality"
+                            id="star_quality"
+                            value={star_quality}
+                            onChange={(event) => setStarQuality(event.target.value)}
+                            min="0"
+                            max="100"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                         />
                     </div>
                 </div>
@@ -365,7 +429,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setStamina(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
@@ -383,7 +447,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setPower(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
@@ -401,7 +465,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setReferee(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
@@ -419,7 +483,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setCommentary(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
@@ -437,7 +501,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setRoadAgent(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
@@ -455,7 +519,7 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setSociable(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
@@ -473,13 +537,13 @@ const WrestlerFormComponent = () => {
                             onChange={(event) => setAmbitious(event.target.value)}
                             min="0"
                             max="100"
-                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
+                            className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
 
                         />
                     </div>
                 </div>                
             </div>
-            <button className="bg-red-500 p-3 rounded-lg w-48 mt-3" type="submit">Submit</button>
+            <button className="bg-red-500 p-3 rounded-lg w-48 ml-5" type="submit">Submit</button>
         </form>
     );
 };

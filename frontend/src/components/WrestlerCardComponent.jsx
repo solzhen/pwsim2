@@ -31,7 +31,7 @@ const WrestlerCard = ({ wrestler }) => {
                     <p className="text-slate-400">Finisher: {wrestler.finisher}</p>
                 </div>
                 <div>
-                    <img src={wrestler.image} alt="Wrestler Image" />
+                    <img className="w-36 h-36 rounded-lg" src={wrestler.image} alt="Wrestler Image" />
                 </div>
             </div>
             {/* <p className="text-slate-400">Created At: {wrestler.created_at}</p> */}

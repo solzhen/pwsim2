@@ -32,7 +32,7 @@ const WrestlerDetailComponent = () => {
                 <div>
                     <div className="flex">
                         <div>
-                            <img src={wrestler.image} alt={wrestler.name} className="mb-4" />
+                            <img src={wrestler.image} alt={wrestler.name} className="mb-4 w-60 h-60 rounded-md" />
                         </div>
                         <div className="ml-4">
                             {/* Basic Information */}
@@ -67,14 +67,17 @@ const WrestlerDetailComponent = () => {
             <p className="text-slate-400">Psychology: {wrestler.psychology}</p>
             <p className="text-slate-400">Charisma: {wrestler.charisma}</p>
             <p className="text-slate-400">Acting: {wrestler.acting}</p>
-            <p className="text-slate-400">Physique: {wrestler.physique}</p>
             <p className="text-slate-400">Stamina: {wrestler.stamina}</p>
             <p className="text-slate-400">Power: {wrestler.power}</p>
             <p className="text-slate-400">Condition: {wrestler.condition}</p>
             <h3 className=' text-pretty text-slate-600'>Non Wrestling Statistics</h3>
             <p className="text-slate-400">Referee: {wrestler.referee}</p>
             <p className="text-slate-400">Commentary: {wrestler.commentary}</p>
-            <p className="text-slate-400">Road Agent: {wrestler.road_agent}</p>            
+            <p className="text-slate-400">Road Agent: {wrestler.road_agent}</p>
+            <h3 className=' text-pretty text-slate-600'>Appearance</h3>
+            <p className="text-slate-400">Sex Appeal: {wrestler.sex_appeal}</p>
+            <p className="text-slate-400">Intimidating: {wrestler.intimidating}</p>
+            <p className="text-slate-400">Star Quality: {wrestler.star_quality}</p>
             <h3 className=' text-pretty text-slate-600'>Personality</h3>
             <p className="text-slate-400">Ambitious: {wrestler.ambitious}</p>
             <p className="text-slate-400">Sociable: {wrestler.sociable}</p>
