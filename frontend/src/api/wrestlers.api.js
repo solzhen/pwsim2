@@ -18,6 +18,55 @@ const wrestlerRelationApi = axios.create({
 const contractApi = axios.create({
     baseURL: `${URL}/wrestling/api/v1/contracts`,
 });
+const constantsApi = axios.create({
+    baseURL: `${URL}/wrestling/api/v1/constants`,
+});
+
+export const getConstants = async () => {
+    try {
+        const response = await constantsApi.get('/');
+        return response.data;
+    } catch (error) {
+        console.error('Error getting constants:', error);
+        throw error;
+    }
+};
+export const getStyles = async () => {
+    try {
+        const response = await constantsApi.get('/styles');
+        return response.data;
+    } catch (error) {
+        console.error('Error getting styles:', error);
+        throw error;
+    }
+};
+export const getMonths = async () => {
+    try {
+        const response = await constantsApi.get('/months');
+        return response.data;
+    } catch (error) {
+        console.error('Error getting months:', error);
+        throw error;
+    }
+};
+export const getNationalities = async () => {
+    try {
+        const response = await constantsApi.get('/nationalities');
+        return response.data;
+    } catch (error) {
+        console.error('Error getting nationalities:', error);
+        throw error;
+    }
+};
+export const getMoves = async () => {  
+    try {
+        const response = await constantsApi.get('/moves');
+        return response.data;
+    } catch (error) {
+        console.error('Error getting moves:', error);
+        throw error;
+    }
+};
 
 
 // Wrestlers CRUD functions
@@ -33,7 +82,7 @@ export const getWrestlers = async () => {
 
 export const getWrestler = async (wrestlerId) => {
     try {
-        const response = await wrestlerApi.get(`/${wrestlerId}`);
+        const response = await wrestlerApi.get(`/${wrestlerId}/`);
         return response.data;
     } catch (error) {
         console.error('Error getting wrestler:', error);
@@ -53,7 +102,7 @@ export const createWrestler = async (wrestlerData) => {
 
 export const updateWrestler = async (wrestlerId, wrestlerData) => {
     try {
-        const response = await wrestlerApi.put(`/${wrestlerId}`, wrestlerData);
+        const response = await wrestlerApi.put(`/${wrestlerId}/`, wrestlerData);
         return response.data;
     } catch (error) {
         console.error('Error updating wrestler:', error);
@@ -63,7 +112,7 @@ export const updateWrestler = async (wrestlerId, wrestlerData) => {
 
 export const deleteWrestler = async (wrestlerId) => {
     try {
-        const response = await wrestlerApi.delete(`/${wrestlerId}`);
+        const response = await wrestlerApi.delete(`/${wrestlerId}/`);
         return response.data;
     } catch (error) {
         console.error('Error deleting wrestler:', error);
@@ -85,7 +134,7 @@ export const getCompanies = async () => {
 
 export const getCompany = async (companyId) => {
     try {
-        const response = await companyApi.get(`/${companyId}`);
+        const response = await companyApi.get(`/${companyId}/`);
         return response.data;
     } catch (error) {
         console.error('Error getting company:', error);
@@ -105,7 +154,7 @@ export const createCompany = async (companyData) => {
 
 export const updateCompany = async (companyId, companyData) => {
     try {
-        const response = await companyApi.put(`/${companyId}`, companyData);
+        const response = await companyApi.put(`/${companyId}/`, companyData);
         return response.data;
     } catch (error) {
         console.error('Error updating company:', error);
@@ -115,7 +164,7 @@ export const updateCompany = async (companyId, companyData) => {
 
 export const deleteCompany = async (companyId) => {
     try {
-        const response = await companyApi.delete(`/${companyId}`);
+        const response = await companyApi.delete(`/${companyId}/`);
         return response.data;
     } catch (error) {
         console.error('Error deleting company:', error);
@@ -137,7 +186,7 @@ export const getWrestlerRelations = async () => {
 
 export const getWrestlerRelation = async (relationId) => {
     try {
-        const response = await wrestlerRelationApi.get(`/${relationId}`);
+        const response = await wrestlerRelationApi.get(`/${relationId}/`);
         return response.data;
     } catch (error) {
         console.error('Error getting wrestler relation:', error);
@@ -157,7 +206,7 @@ export const createWrestlerRelation = async (relationData) => {
 
 export const updateWrestlerRelation = async (relationId, relationData) => {
     try {
-        const response = await wrestlerRelationApi.put(`/${relationId}`, relationData);
+        const response = await wrestlerRelationApi.put(`/${relationId}/`, relationData);
         return response.data;
     } catch (error) {
         console.error('Error updating wrestler relation:', error);
@@ -167,7 +216,7 @@ export const updateWrestlerRelation = async (relationId, relationData) => {
 
 export const deleteWrestlerRelation = async (relationId) => {
     try {
-        const response = await wrestlerRelationApi.delete(`/${relationId}`);
+        const response = await wrestlerRelationApi.delete(`/${relationId}/`);
         return response.data;
     } catch (error) {
         console.error('Error deleting wrestler relation:', error);
@@ -189,7 +238,7 @@ export const getContracts = async () => {
 
 export const getContract = async (contractId) => {
     try {
-        const response = await contractApi.get(`/${contractId}`);
+        const response = await contractApi.get(`/${contractId}/`);
         return response.data;
     } catch (error) {
         console.error('Error getting contract:', error);
@@ -209,7 +258,7 @@ export const createContract = async (contractData) => {
 
 export const updateContract = async (contractId, contractData) => {
     try {
-        const response = await contractApi.put(`/${contractId}`, contractData);
+        const response = await contractApi.put(`/${contractId}/`, contractData);
         return response.data;
     } catch (error) {
         console.error('Error updating contract:', error);
@@ -219,7 +268,7 @@ export const updateContract = async (contractId, contractData) => {
 
 export const deleteContract = async (contractId) => {
     try {
-        const response = await contractApi.delete(`/${contractId}`);
+        const response = await contractApi.delete(`/${contractId}/`);
         return response.data;
     } catch (error) {
         console.error('Error deleting contract:', error);

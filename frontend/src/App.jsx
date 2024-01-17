@@ -13,8 +13,10 @@ function App() {
         <Route path="/" element={<Navigate to="/wrestlers" />} />
         <Route path="/wrestlers" element={<WrestlersPage />} />
         <Route path="/wrestler-create" element={<WrestlerFormPage />} />
+        <Route path="/wrestlers/:id/edit" element={<WrestlerFormPage />} />
         <Route path="/wrestlers/:id" element={<WrestlerDetailPage />} />
         <Route path="/companies" element={<CompaniesPage />} />
+        <Route path="/company-create" element={<CompaniesPage />} />
       </Routes>
     </BrowserRouter>
   );

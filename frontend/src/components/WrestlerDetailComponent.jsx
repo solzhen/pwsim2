@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getWrestler } from '../api/wrestlers.api';
 
 const WrestlerDetailComponent = () => {
+
+
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/wrestlers/${wrestler.id}/edit`);
+    };
+
+
     const { id } = useParams();
     const [wrestler, setWrestler] = useState(null);
 
@@ -17,7 +25,7 @@ const WrestlerDetailComponent = () => {
 
     if (!wrestler) {
         return <div className="text-center mt-4">Loading...</div>;
-    }
+    }    
 
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const currentDate = new Date();
@@ -25,6 +33,7 @@ const WrestlerDetailComponent = () => {
     const currentMonth = currentDate.getMonth() + 1;
     const age = currentYear - wrestler.year_of_birth - (wrestler.month_of_birth > currentMonth ? 1 : 0);
 
+    
     return (
         <div className=" max-w-lg mx-auto bg-black shadow-md p-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">{wrestler.name}</h2>
@@ -47,10 +56,12 @@ const WrestlerDetailComponent = () => {
                                 </span>
                             </p>
                             <p className="">Age: {age} (Born on {months[wrestler.month_of_birth - 1]} of {wrestler.year_of_birth})</p>
+                            <p className=''>Nationality: {wrestler.nationality}</p>
                             <p className="">Height (cm): {wrestler.height}</p>
                             <p className="">Weight (Kg): {wrestler.weight}</p>
                             <p className="">Finisher: {wrestler.finisher}</p>
                             <p className="">Style: {wrestler.style}</p>
+                            <button className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-4 py-1 mt-2 rounded" onClick={handleClick}>Edit</button>
                         </div>
                     </div>
                 </div>
@@ -58,29 +69,29 @@ const WrestlerDetailComponent = () => {
             {/* <p className="text-slate-400">Created At: {wrestler.created_at}</p> */}
             {/* <p className="text-slate-400">Updated At: {wrestler.updated_at}</p> */}
             <h3 className=' text-pretty text-slate-600'>Popularity</h3>
-            <p className="text-slate-400">Overness: {wrestler.overness}</p>
-            <p className="text-slate-400">Momentum: {wrestler.momentum}</p>
+            <p className="text-slate-400">{" "}Overness: {wrestler.overness}</p>
+            <p className="text-slate-400">{" "}Momentum: {wrestler.momentum}</p>
             <h3 className=' text-pretty text-slate-600'>Wrestling Performance Statistics</h3>
-            <p className="text-slate-400">Brawl: {wrestler.brawl}</p>
-            <p className="text-slate-400">Technical: {wrestler.technical}</p>
-            <p className="text-slate-400">Aerial: {wrestler.aerial}</p>
-            <p className="text-slate-400">Psychology: {wrestler.psychology}</p>
-            <p className="text-slate-400">Charisma: {wrestler.charisma}</p>
-            <p className="text-slate-400">Acting: {wrestler.acting}</p>
-            <p className="text-slate-400">Stamina: {wrestler.stamina}</p>
-            <p className="text-slate-400">Power: {wrestler.power}</p>
-            <p className="text-slate-400">Condition: {wrestler.condition}</p>
+            <p className="text-slate-400">{" "}Brawl: {wrestler.brawl}</p>
+            <p className="text-slate-400">{" "}Technical: {wrestler.technical}</p>
+            <p className="text-slate-400">{" "}Aerial: {wrestler.aerial}</p>
+            <p className="text-slate-400">{" "}Psychology: {wrestler.psychology}</p>
+            <p className="text-slate-400">{" "}Charisma: {wrestler.charisma}</p>
+            <p className="text-slate-400">{" "}Acting: {wrestler.acting}</p>
+            <p className="text-slate-400">{" "}Stamina: {wrestler.stamina}</p>
+            <p className="text-slate-400">{" "}Power: {wrestler.power}</p>
+            <p className="text-slate-400">{" "}Condition: {wrestler.condition}</p>
             <h3 className=' text-pretty text-slate-600'>Non Wrestling Statistics</h3>
-            <p className="text-slate-400">Referee: {wrestler.referee}</p>
-            <p className="text-slate-400">Commentary: {wrestler.commentary}</p>
-            <p className="text-slate-400">Road Agent: {wrestler.road_agent}</p>
+            <p className="text-slate-400">{" "}Referee: {wrestler.referee}</p>
+            <p className="text-slate-400">{" "}Commentary: {wrestler.commentary}</p>
+            <p className="text-slate-400">{" "}Road Agent: {wrestler.road_agent}</p>
             <h3 className=' text-pretty text-slate-600'>Appearance</h3>
-            <p className="text-slate-400">Sex Appeal: {wrestler.sex_appeal}</p>
-            <p className="text-slate-400">Intimidating: {wrestler.intimidating}</p>
-            <p className="text-slate-400">Star Quality: {wrestler.star_quality}</p>
+            <p className="text-slate-400">{" "}Sex Appeal: {wrestler.sex_appeal}</p>
+            <p className="text-slate-400">{" "}Intimidating: {wrestler.intimidating}</p>
+            <p className="text-slate-400">{" "}Star Quality: {wrestler.star_quality}</p>
             <h3 className=' text-pretty text-slate-600'>Personality</h3>
-            <p className="text-slate-400">Ambitious: {wrestler.ambitious}</p>
-            <p className="text-slate-400">Sociable: {wrestler.sociable}</p>
+            <p className="text-slate-400">{" "}Ambitious: {wrestler.ambitious}</p>
+            <p className="text-slate-400">{" "}Sociable: {wrestler.sociable}</p>
 
         </div>
     );

@@ -28,7 +28,7 @@ const WrestlerCard = ({ wrestler }) => {
                     <p className="text-slate-400">Gender: {wrestler.gender.charAt(0).toUpperCase() + wrestler.gender.slice(1)}</p>
                     <p className="text-slate-400">Weight (Kg): {wrestler.weight}</p>
                     <p className="text-slate-400">Height (cm): {wrestler.height}</p>
-                    <p className="text-slate-400">Finisher: {wrestler.finisher}</p>
+                    <p className="text-slate-400">Country: {wrestler.nationality}</p>
                 </div>
                 <div>
                     <img className="w-36 h-36 rounded-lg" src={wrestler.image} alt="Wrestler Image" />

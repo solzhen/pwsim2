@@ -1,13 +1,15 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from .consts import MONTH_CHOICES, RELATIONSHIP_CHOICES, STYLE_CHOICES as style_choices
+from .consts import NATIONALITY_CHOICES 
 # Create your models here.
 
 
 class Wrestler(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     gender = models.CharField(max_length=20, choices=[
         ('male', 'Male'), ('female', 'Female'), ('other', 'Other')], default='male')
+    nationality = models.CharField(max_length=50, choices=NATIONALITY_CHOICES)
     year_of_birth = models.PositiveIntegerField()
     month_of_birth = models.PositiveIntegerField(choices=MONTH_CHOICES)
     height = models.IntegerField()
@@ -17,7 +19,7 @@ class Wrestler(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     style = models.CharField(
-        max_length=50, choices=style_choices, default='Brawler')
+        max_length=50, choices=style_choices, default='all-rounder')
     # performance stats
     brawl = models.PositiveSmallIntegerField(
         validators=[MaxValueValidator(100), MinValueValidator(0)], default=50)
