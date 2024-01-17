@@ -5,7 +5,8 @@ import { toast } from "react-hot-toast";
 import axios from 'axios';
 import { getNationalities, getStyles, getMoves } from '../api/wrestlers.api';
 import { getWrestler, updateWrestler } from '../api/wrestlers.api';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
+import { Tooltip } from 'react-tooltip';
 
 
 const customStyles = {
@@ -28,6 +29,14 @@ const customStyles = {
         // Add more styles...
     }),
 };
+
+function formatFileName(name) {
+    if (name.length > 18) {
+      return '...' + name.slice(-15);
+    } else {
+      return name;
+    }
+  }
 
 const WrestlerFormComponent = () => {
 
@@ -278,8 +287,8 @@ const WrestlerFormComponent = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-4 gap-4 p-6">
-                    <div className='col-span-2'>
+                <div className="flex gap-3 p-6 flex-wrap">
+                    <div className='w-96 col-span-2'>
                         <label htmlFor="name" className="block text-sm font-medium text-slate-200">
                             Name
                         </label>
@@ -294,7 +303,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-96 col-span-2'>
                         <label htmlFor='gender' className="block text-sm font-medium text-slate-200">
                             Gender
                         </label>
@@ -313,11 +322,11 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-96'>
                         <label htmlFor='nationality' className="block text-sm font-medium text-slate-200">
                             Nationality
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1" data-tooltip-id='nationailty-tooltip' data-tooltip-content={nationality}>
                             <Select
                                 styles={customStyles}
                                 id='nationality'
@@ -330,9 +339,10 @@ const WrestlerFormComponent = () => {
                                     label: nation[1]
                                 }))}
                             />
+                            <Tooltip id="nationailty-tooltip" />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-96'>
                         <label htmlFor="year_of_birth" className="block text-sm font-medium text-slate-200">
                             Year of Birth
                         </label>
@@ -347,7 +357,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-96'>
                         <label htmlFor="month_of_birth" className="block text-sm font-medium text-slate-200">
                             Month of Birth
                         </label>
@@ -365,11 +375,16 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
-                        <label htmlFor="height" className="block text-sm font-medium text-slate-200">
-                            Height (cm.)
-                        </label>
-                        <div className="mt-1">
+                    <div className='w-96'>
+                        <div className="flex w-full justify-between">
+                            <label htmlFor="height" className="block text-sm font-medium text-slate-200">
+                                Height (cm)
+                            </label>
+                            <label htmlFor="height" className="block text-sm font-medium text-slate-200">
+                                Height (ft)
+                            </label>
+                        </div>
+                        <div className="mt-1 flex w-full">
                             <input
                                 className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
@@ -378,13 +393,27 @@ const WrestlerFormComponent = () => {
                                 value={height}
                                 onChange={(event) => setHeight(event.target.value)}
                             />
+                            <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
+                                type="number"
+                                name="height_feet"
+                                id="height_feet"
+                                value={Math.round(height / 30.48 * 1000) / 1000}
+                                onChange={(event) => setHeight(event.target.value * 30.48)}
+                            />
                         </div>
                     </div>
-                    <div>
-                        <label htmlFor="weight" className="block text-sm font-medium text-slate-200">
-                            Weight (Kg.)
-                        </label>
-                        <div className="mt-1">
+                    <div className='w-96'>
+                        <div className="flex w-full justify-between">
+                            <label htmlFor="weight" className="block text-sm font-medium text-slate-200">
+                                Weight (Kg)
+                            </label>
+                            <label htmlFor="weight" className="block text-sm font-medium text-slate-200">
+                                Weight (Lbs)
+                            </label>
+                        </div>
+
+                        <div className="mt-1 flex w-full">
                             <input
                                 className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
@@ -393,31 +422,48 @@ const WrestlerFormComponent = () => {
                                 value={weight}
                                 onChange={(event) => setWeight(event.target.value)}
                             />
+                            <input
+                                className='bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white'
+                                type="number"
+                                name="weight_lbs"
+                                id="weight_lbs"
+                                value={Math.round(weight * 2.20462 * 1000) / 1000}
+                                onChange={(event) => setWeight(event.target.value / 2.20462)}
+                            />
                         </div>
                     </div>
 
-                    <div>
+                    <div className='w-96'>
                         <label htmlFor="finisher" className="block text-sm font-medium text-slate-200">
                             Finisher
                         </label>
-                        <div className="mt-1 relative">
-                            <Select
+                        <div className="mt-1" data-tooltip-id="finisher-tooltip" data-tooltip-content={finisher}>
+                            {/* <Select
                                 styles={customStyles}
                                 id="finisher"
                                 name="finisher"
                                 value={{ value: moves.find(option => option.value === finisher), label: finisher }}
                                 onChange={(option) => setFinisher(option.value)}
                                 options={moves && moves.map(move => ({ value: move[1], label: move[1] }))} /
-                            >
+                            > */}
+                            <Select
+                                styles={customStyles}
+                                id="finisher"
+                                name="finisher"
+                                value={{ value: moves.find(option => option.value === finisher), label: finisher }}
+                                onChange={(option) => setFinisher(option.value)}
+                                options={moves && moves.map(move => ({ value: move[1], label: move[1] }))}
+                            />
+                            <Tooltip id="finisher-tooltip" />
                         </div>
 
                     </div>
 
-                    <div>
+                    <div className='w-96'>
                         <label htmlFor="style" className="block text-sm font-medium text-slate-200">
                             Style
                         </label>
-                        <div className="mt-1">
+                        <div className="mt-1" data-tooltip-id='style-tooltip' data-tooltip-content={style.toLocaleUpperCase()[0] + style.slice(1)}>
                             <Select
                                 styles={customStyles}
                                 id="style"
@@ -430,23 +476,42 @@ const WrestlerFormComponent = () => {
                                     label: style[1]
                                 }))}
                             />
+                            <Tooltip id="style-tooltip" />
                         </div>
                     </div>
-                    <div className='col-span-2'>
+
+                    <div className='w-96'>
                         <label htmlFor="image" className="block text-sm font-medium text-slate-200">
                             Image
                         </label>
                         <div className="mt-1">
-                            <input
-                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
+                            {/* <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm pt-3 pb-3 px-3 border-[1px] border-white"
                                 type="file"
                                 name="image"
                                 id="image"
                                 onChange={(event) => setImage(event.target.files[0])}
-                            />
+                            /> */}
+                            <div className="w-full">
+                                <label className="flex flex-row gap-2 justify-between items-center pt-2 pb-1 bg-black text-blue tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-gray-500">
+                                    <div className='flex flex-row'>
+                                        <svg className="w-10 h-10 px-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M10 4a2 2 0 00-2 2v4a2 2 0 104 0V6a2 2 0 00-2-2zm0 12a6 6 0 100-12 6 6 0 000 12z" />
+                                        </svg>
+                                        <a className="mt-2 text-base leading-normal px-1">Select a file</a>
+                                    </div>
+                                    <a className="leading-normal text-zinc-800 p-2">{image ? formatFileName(image.name) : ''}</a>
+                                    <input type='file' className="hidden" onChange={(event) => setImage(event.target.files[0])}/>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div>
+
+                    {/* Line break */}
+                    <div className='basis-full'></div>
+
+
+                    <div className='w-32'>
                         <label htmlFor="brawl" className="block text-sm font-medium text-slate-200">
                             Brawl
                         </label>
@@ -464,7 +529,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="technical" className="block text-sm font-medium text-slate-200">
                             Technical
                         </label>
@@ -482,7 +547,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="aerial" className="block text-sm font-medium text-slate-200">
                             Aerial
                         </label>
@@ -500,7 +565,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="psychology" className="block text-sm font-medium text-slate-200">
                             Psychology
                         </label>
@@ -518,7 +583,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="charisma" className="block text-sm font-medium text-slate-200">
                             Charisma
                         </label>
@@ -536,7 +601,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="acting" className="block text-sm font-medium text-slate-200">
                             Acting
                         </label>
@@ -554,7 +619,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="sex_appeal" className="block text-sm font-medium text-slate-200">
                             Sex Appeal
                         </label>
@@ -571,7 +636,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="intimidating" className="block text-sm font-medium text-slate-200">
                             Intimidating
                         </label>
@@ -588,7 +653,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="star_quality" className="block text-sm font-medium text-slate-200">
                             Star Quality
                         </label>
@@ -605,7 +670,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="stamina" className="block text-sm font-medium text-slate-200">
                             Stamina
                         </label>
@@ -622,7 +687,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="power" className="block text-sm font-medium text-slate-200">
                             Power
                         </label>
@@ -639,7 +704,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="referee" className="block text-sm font-medium text-slate-200">
                             Referee
                         </label>
@@ -656,7 +721,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="commentary" className="block text-sm font-medium text-slate-200">
                             Commentary
                         </label>
@@ -673,7 +738,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="road_agent" className="block text-sm font-medium text-slate-200">
                             Road Agent
                         </label>
@@ -690,7 +755,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="sociable" className="block text-sm font-medium text-slate-200">
                             Sociable
                         </label>
@@ -707,7 +772,7 @@ const WrestlerFormComponent = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className='w-32'>
                         <label htmlFor="ambitious" className="block text-sm font-medium text-slate-200">
                             Ambitious
                         </label>
