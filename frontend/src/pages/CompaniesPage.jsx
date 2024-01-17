@@ -8,9 +8,9 @@ export function CompaniesPage() {
                 <div>
                     <Link
                         to="/company-create"
-                        className="text-blue-500"
+                        className="text-gray-700"
                     >
-                        <h1 className="font-bold p-2 hover:bg-gray-700  hover:text-blue-100 rounded-b-md ">
+                        <h1 className="font-bold p-2 hover:bg-gray-700  hover:text-blue-100 rounded-b-md">
                             Create Company
                         </h1>
                     </Link>

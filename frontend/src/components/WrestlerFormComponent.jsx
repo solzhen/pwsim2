@@ -5,6 +5,29 @@ import { toast } from "react-hot-toast";
 import axios from 'axios';
 import { getNationalities, getStyles, getMoves } from '../api/wrestlers.api';
 import { getWrestler, updateWrestler } from '../api/wrestlers.api';
+import Select from 'react-select';
+
+
+const customStyles = {
+    control: (provided) => ({
+        ...provided,
+        backgroundColor: "black",
+        color: "white",
+        borderColor: 'white',
+        padding: '0.5rem',
+        borderRadius: '0.0rem',
+    }),
+    option: (provided, state) => ({
+        color: state.isSelected ? 'white' : '#9CA3AF',
+        cursor: 'pointer',
+        backgroundColor: state.isFocused ? state.isSelected ? 'Brown' : 'DarkRed' : state.isSelected ? 'ForestGreen' : 'black',
+    }),
+    singleValue: (provided) => ({
+        ...provided,
+        color: 'white', // This sets the text color of the selected value
+        // Add more styles...
+    }),
+};
 
 const WrestlerFormComponent = () => {
 
@@ -17,11 +40,11 @@ const WrestlerFormComponent = () => {
     const [name, setName] = useState('');
     const [gender, setGender] = useState('');
     const [yearOfBirth, setYearOfBirth] = useState('');
-    const [monthOfBirth, setMonthOfBirth] = useState('');
+    const [monthOfBirth, setMonthOfBirth] = useState('1');
     const [nationality, setNationality] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
-    const [finisher, setFinisher] = useState('');    
+    const [finisher, setFinisher] = useState('');
     const [image, setImage] = useState(null);
     const [style, setStyle] = useState('Brawler');
     //Performance stats
@@ -64,7 +87,7 @@ const WrestlerFormComponent = () => {
                     setWeight(wrestlerData.weight);
                     setFinisher(wrestlerData.finisher);
                     setStyle(wrestlerData.style);
-                    
+
                     setBrawl(wrestlerData.brawl);
                     setTechnical(wrestlerData.technical);
                     setAerial(wrestlerData.aerial);
@@ -97,7 +120,7 @@ const WrestlerFormComponent = () => {
     }, [id]);
 
 
-    
+
     const [styles, setStyles] = useState(null);
     useEffect(() => {
         const fetchStyles = async () => {
@@ -111,10 +134,10 @@ const WrestlerFormComponent = () => {
         fetchStyles();
     }, []);
 
-    
+
     const filteredOptions = moves.filter(option => option[1].toLowerCase().includes(finisher.toLowerCase()));
 
-    
+
     useEffect(() => {
         const fetchMoves = async () => {
             try {
@@ -125,7 +148,7 @@ const WrestlerFormComponent = () => {
             }
         };
         fetchMoves();
-    }, []);    
+    }, []);
 
     const [nationalities, setNationalities] = useState(null);
     useEffect(() => {
@@ -190,7 +213,7 @@ const WrestlerFormComponent = () => {
             });
     };
 
-    
+
 
     // Handle form submission: create a wrestler using ../api/wrestlers.api.js
     const handleSubmit = (event) => {
@@ -251,214 +274,185 @@ const WrestlerFormComponent = () => {
             });
     };
 
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-4 gap-4 p-6">
                     <div className='col-span-2'>
-                        <label htmlFor="name" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="name" className="block text-sm font-medium text-slate-200">
                             Name
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="text"
                                 name="name"
                                 id="name"
                                 value={name}
                                 onChange={(event) => setName(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor='gender' className="block text-sm font-medium text-slate-400">
+                        <label htmlFor='gender' className="block text-sm font-medium text-slate-200">
                             Gender
                         </label>
                         <div className="mt-1">
-                            <select
+                            <Select
+                                styles={customStyles}
                                 id='gender'
                                 name='gender'
-                                value={gender}
-                                onChange={(event) => setGender(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-                            >
-                                <option value="male">Male</option>
-                                <option value='female'>Female</option>
-                                <option value='other'>Other</option>
-                            </select>
+                                value={{ value: gender, label: gender.toUpperCase()[0] + gender.slice(1) }}
+                                onChange={(selectedOption) => setGender(selectedOption.value)}
+                                options={[
+                                    { value: 'male', label: 'Male' },
+                                    { value: 'female', label: 'Female' },
+                                    { value: 'other', label: 'Other' }
+                                ]}
+                            />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor='nationality' className="block text-sm font-medium text-slate-400">
+                        <label htmlFor='nationality' className="block text-sm font-medium text-slate-200">
                             Nationality
                         </label>
                         <div className="mt-1">
-                            <select
+                            <Select
+                                styles={customStyles}
                                 id='nationality'
                                 name='nationality'
-                                value={nationality}
-                                onChange={(event) => setNationality(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-                            >
-                                {nationalities && nationalities.map((nation) => (
-                                    <option key={nation[0]} value={nation[0]}>
-                                        {nation[1]}
-                                    </option>
-                                ))}
-                            </select>
+                                //value={nationality}
+                                value={{ value: nationality, label: nationality }}
+                                onChange={(selectedOption) => setNationality(selectedOption.value)}
+                                options={nationalities && nationalities.map((nation) => ({
+                                    value: nation[0],
+                                    label: nation[1]
+                                }))}
+                            />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="year_of_birth" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="year_of_birth" className="block text-sm font-medium text-slate-200">
                             Year of Birth
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="year_of_birth"
                                 id="year_of_birth"
                                 value={yearOfBirth}
                                 onChange={(event) => setYearOfBirth(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="month_of_birth" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="month_of_birth" className="block text-sm font-medium text-slate-200">
                             Month of Birth
                         </label>
                         <div className="mt-1">
-                            <select
+                            <Select
+                                styles={customStyles}
                                 id="month_of_birth"
                                 name="month_of_birth"
-                                value={monthOfBirth}
-                                onChange={(event) => setMonthOfBirth(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-                            >
-                                {/* generate options using the MONTH_CHOICES in constants */}
-                                {months.map((month) => (
-                                    <option key={month[0]} value={month[0]}>
-                                        {month[1]}
-                                    </option>
-                                ))}
-                            </select>
+                                value={{ value: monthOfBirth, label: months[monthOfBirth - 1][1] }}
+                                onChange={(selectedOption) => setMonthOfBirth(selectedOption.value)}
+                                options={months.map((month) => ({
+                                    value: month[0],
+                                    label: month[1]
+                                }))}
+                            />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="height" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="height" className="block text-sm font-medium text-slate-200">
                             Height (cm.)
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="height"
                                 id="height"
                                 value={height}
                                 onChange={(event) => setHeight(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="weight" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="weight" className="block text-sm font-medium text-slate-200">
                             Weight (Kg.)
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="weight"
                                 id="weight"
                                 value={weight}
                                 onChange={(event) => setWeight(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
-                    {/* <div> */}
-                    {/* <label htmlFor="finisher" className="block text-sm font-medium text-slate-400">
-                            Finisher
-                        </label>
-                        <div className="mt-1">
-                            <input
-                                type="text"
-                                name="finisher"
-                                id="finisher"
-                                value={finisher}
-                                onChange={(event) => setFinisher(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-                            />
-                        </div>
-                    </div> */}
 
                     <div>
-                        <label htmlFor="finisher" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="finisher" className="block text-sm font-medium text-slate-200">
                             Finisher
                         </label>
                         <div className="mt-1 relative">
-                            <input
-                                type="text"
-                                value={finisher}
-                                onChange={e => setFinisher(e.target.value)}
-                                onFocus={() => setIsFocused(true)}
-                                onBlur={() => {
-                                    // Use a timeout to delay the execution of setIsFocused(false)
-                                    setTimeout(() => setIsFocused(false), 200);
-                                }} 
-                                className='shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md'
-                            />
-                            {isFocused && finisher && (
-                                <div className="border-x-2 border-b-2 absolute z-10 bg-slate-900" >
-                                    {filteredOptions.map((option, index) => (
-                                        <div key={index} onClick={() => setFinisher(option[1])}>
-                                            {option[1]}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
+                            <Select
+                                styles={customStyles}
+                                id="finisher"
+                                name="finisher"
+                                value={{ value: moves.find(option => option.value === finisher), label: finisher }}
+                                onChange={(option) => setFinisher(option.value)}
+                                options={moves && moves.map(move => ({ value: move[1], label: move[1] }))} /
+                            >
                         </div>
+
                     </div>
 
                     <div>
-                        <label htmlFor="style" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="style" className="block text-sm font-medium text-slate-200">
                             Style
                         </label>
                         <div className="mt-1">
-                            <select
+                            <Select
+                                styles={customStyles}
                                 id="style"
                                 name="style"
-                                value={style}
-                                onChange={(event) => setStyle(event.target.value)}
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
-                            >
-                                {/* generate options using the styles */}
-                                {styles && styles.map((style) => (
-                                    <option key={style[0]} value={style[0]}>
-                                        {style[1]}
-                                    </option>
-                                ))}
-                            </select>
+                                //value={style}
+                                value={{ value: style, label: style[0].toUpperCase() + style.slice(1) }}
+                                onChange={(selectedOption) => setStyle(selectedOption.value)}
+                                options={styles && styles.map((style) => ({
+                                    value: style[0],
+                                    label: style[1]
+                                }))}
+                            />
                         </div>
                     </div>
                     <div className='col-span-2'>
-                        <label htmlFor="image" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="image" className="block text-sm font-medium text-slate-200">
                             Image
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="file"
                                 name="image"
                                 id="image"
                                 onChange={(event) => setImage(event.target.files[0])}
-                                className="text-slate-500 shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="brawl" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="brawl" className="block text-sm font-medium text-slate-200">
                             Brawl
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="brawl"
                                 id="brawl"
@@ -466,17 +460,17 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setBrawl(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                                 required
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="technical" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="technical" className="block text-sm font-medium text-slate-200">
                             Technical
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="technical"
                                 id="technical"
@@ -484,17 +478,17 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setTechnical(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                                 required
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="aerial" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="aerial" className="block text-sm font-medium text-slate-200">
                             Aerial
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="aerial"
                                 id="aerial"
@@ -502,17 +496,17 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setAerial(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                                 required
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="psychology" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="psychology" className="block text-sm font-medium text-slate-200">
                             Psychology
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="psychology"
                                 id="psychology"
@@ -520,17 +514,17 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setPsychology(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                                 required
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="charisma" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="charisma" className="block text-sm font-medium text-slate-200">
                             Charisma
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="charisma"
                                 id="charisma"
@@ -538,17 +532,17 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setCharisma(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                                 required
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="acting" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="acting" className="block text-sm font-medium text-slate-200">
                             Acting
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="acting"
                                 id="acting"
@@ -556,17 +550,17 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setActing(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                                 required
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="sex_appeal" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="sex_appeal" className="block text-sm font-medium text-slate-200">
                             Sex Appeal
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="sex_appeal"
                                 id="sex_appeal"
@@ -574,16 +568,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setSexAppeal(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="intimidating" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="intimidating" className="block text-sm font-medium text-slate-200">
                             Intimidating
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="intimidating"
                                 id="intimidating"
@@ -591,16 +585,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setIntimidating(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="star_quality" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="star_quality" className="block text-sm font-medium text-slate-200">
                             Star Quality
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="star_quality"
                                 id="star_quality"
@@ -608,16 +602,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setStarQuality(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="stamina" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="stamina" className="block text-sm font-medium text-slate-200">
                             Stamina
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="stamina"
                                 id="stamina"
@@ -625,16 +619,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setStamina(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="power" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="power" className="block text-sm font-medium text-slate-200">
                             Power
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="power"
                                 id="power"
@@ -642,16 +636,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setPower(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="referee" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="referee" className="block text-sm font-medium text-slate-200">
                             Referee
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="referee"
                                 id="referee"
@@ -659,16 +653,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setReferee(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="commentary" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="commentary" className="block text-sm font-medium text-slate-200">
                             Commentary
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="commentary"
                                 id="commentary"
@@ -676,16 +670,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setCommentary(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="road_agent" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="road_agent" className="block text-sm font-medium text-slate-200">
                             Road Agent
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="road_agent"
                                 id="road_agent"
@@ -693,16 +687,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setRoadAgent(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="sociable" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="sociable" className="block text-sm font-medium text-slate-200">
                             Sociable
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="sociable"
                                 id="sociable"
@@ -710,16 +704,16 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setSociable(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="ambitious" className="block text-sm font-medium text-slate-400">
+                        <label htmlFor="ambitious" className="block text-sm font-medium text-slate-200">
                             Ambitious
                         </label>
                         <div className="mt-1">
                             <input
+                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="ambitious"
                                 id="ambitious"
@@ -727,14 +721,13 @@ const WrestlerFormComponent = () => {
                                 onChange={(event) => setAmbitious(event.target.value)}
                                 min="0"
                                 max="100"
-                                className="shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm border-slate-800 rounded-md"
                             />
                         </div>
                     </div>
                 </div>
-                <button className="bg-red-500 p-3 rounded-lg w-48 ml-5 font-bold text-2xl" type="submit">{(id)? "Update" : "Submit"}</button>
+                <button className="bg-black text-white p-3 w-48 ml-5 font-bold text-2xl border-white border-4" type="submit">{(id) ? "Update" : "Submit"}</button>
                 <div>
-                    <button className="p-3 rounded-lg w-48 m-5 bg-purple-600 text-sm" type="button" onClick={fillRandomValues}>Fill with random values</button>
+                    <button className="p-3 w-48 m-5 bg-black text-white text-sm" type="button" onClick={fillRandomValues}>Fill with random values</button>
                 </div>
             </form>
         </div>
