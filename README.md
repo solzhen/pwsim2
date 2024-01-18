@@ -13,4 +13,4 @@ Another pro wrestling sim but using django+react+tailwind, made for practice
 Please refer to the README in the frontend and backend directories for specific installation and usage instructions
 
 
-![alt text]('https://github.com/solzhen/pwsim2/blob/main/git media/wrestler_view.jpg?raw=true')
+![alt text](https://github.com/solzhen/pwsim2/blob/main/git%20media/wrestler%20view.png)
