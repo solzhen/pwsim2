@@ -153,7 +153,7 @@ const WrestlerList = () => {
 
                 <div className="flex flex-row justify-between">
                     <div className='flex flex-row flex-wrap gap-1'>
-                        <p className="text-zinc-400 h-5 px-2 leading-8">Filters:</p>
+                        {/* <p className="text-zinc-400 h-5 px-2 leading-8">Filters:</p> */}
                         {filterInputGenerator(nameFilter, setNameFilter, 'Name')}
                         {filterInputGenerator(weightFilter, setWeightFilter, 'Weight(Kg)')}
                         {filterInputGenerator(heightFilter, setHeightFilter, 'Height(cm)')}
