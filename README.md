@@ -16,8 +16,6 @@ Please refer to the README in the frontend and backend directories for specific 
 
 A very very basic web app full stack frontend+backend that allows common CRUD operations over pro-wrestlers.
 
-It is very much a way for me to experiment and learn different technologies.
-
 Frontend styling is mostly (if not all) powered by TailwindCSS.
 
 ### Some views
@@ -37,4 +35,10 @@ Create Wrestler
 Random Values Generation, with the help of randomuser api for Names and countries
 
 ![alt text](https://github.com/solzhen/pwsim2/blob/main/git%20media/random%20values.png)
+
+## But Why
+
+It is very much a way for me to experiment and learn different technologies. It's my first time using Tailwind, and  I gotta say, it's pretty good.
+My love-hate relationship with React continues.
+Django is bae.
 
