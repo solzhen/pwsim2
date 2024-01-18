@@ -26,6 +26,10 @@ Wrestlers Views with hand made filters
 
 ![List View](https://github.com/solzhen/pwsim2/blob/main/git%20media/wrestler%20view.png)
 
+Wrestler Detail
+
+![alt text](https://github.com/solzhen/pwsim2/blob/main/git%20media/wrestler%20detail.png)
+
 Create Wrestler
 
 ![Wrestling Creation](https://github.com/solzhen/pwsim2/blob/main/git%20media/create%20wrestler.png)
@@ -34,6 +38,3 @@ Random Values Generation, with the help of randomuser api for Names and countrie
 
 ![alt text](https://github.com/solzhen/pwsim2/blob/main/git%20media/random%20values.png)
 
-Wrestler Detail
-
-![alt text](https://github.com/solzhen/pwsim2/blob/main/git%20media/wrestler%20detail.png)
