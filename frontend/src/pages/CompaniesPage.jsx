@@ -4,18 +4,17 @@ import { Link } from "react-router-dom";
 export function CompaniesPage() {
     return (
         <div>
-            <div className='flex justify-normal bg-slate-300 rounded-b-md'>
+            <div className='border-4 border-black flex justify-normal bg-black'>
                 <div>
                     <Link
                         to="/company-create"
-                        className="text-gray-700"
+                        className="text-black"
                     >
-                        <h1 className="font-bold p-2 hover:bg-gray-700  hover:text-blue-100 rounded-b-md">
-                            Create Company
+                        <h1 className="py-0 font-bold p-2 bg-white hover:bg-black  hover:text-zinc-100 border-2 border-black hover:border-white">
+                            NEW COMPANY
                         </h1>
                     </Link>
                 </div>
-
             </div>
             <div>
                 <CompanyList />

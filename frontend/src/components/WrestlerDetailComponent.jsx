@@ -42,38 +42,37 @@ const WrestlerDetailComponent = () => {
 
 
     return (
-        <div className="w-full mx-auto bg-black shadow-md p-4 rounded-lg">
+        <div className="w-full bg-black shadow-md p-4 rounded-lg mx-auto">
             <h2 className="text-2xl font-bold mx-4 px-2 border-b-2 border-zinc-100">{wrestler.name}</h2>
-            <div>
-                <div className="flex">
-                    <div className='w-72 h-72 mx-4 p-1 border-l-2'>
-                        <img src={wrestler.image} alt={wrestler.name} className="border-2 border-zinc-500" />
-                    </div>
-                    <div className="w-96">
-                        {/* Basic Information */}
-                        <p className="">
-                            Gender:{" "}
-                            <span className={wrestler.gender === 'male' ?
-                                'text-blue-500' :
-                                wrestler.gender === 'female' ?
-                                    'text-pink-500' :
-                                    'text-violet-400'}>
-                                {wrestler.gender.charAt(0).toUpperCase() + wrestler.gender.slice(1)}
-                            </span>
-                        </p>
-                        <p className="">Age: {age} (Born on {months[wrestler.month_of_birth - 1]} of {wrestler.year_of_birth})</p>
-                        <p className=''>Nationality: {wrestler.nationality}</p>
-                        <p className="">Height (cm): {wrestler.height}</p>
-                        <p className="">Weight (Kg): {wrestler.weight}</p>
-                        <p className="">Finisher: {wrestler.finisher}</p>
-                        <p className="">Style: {wrestler.style}</p>
-                        <button className="bg-black hover:bg-zinc-700 text-white font-bold px-4 py-1 mt-2 border-zinc-500 border-2" onClick={handleClick}>Edit</button>
-                    </div>
+            {/* Line break */}
+            <div className='basis-full'></div>
+            <div className="flex">
+                <div className='w-96 h-96 mx-4 p-1 border-l-2 border-r-2'>
+                    <img src={wrestler.image} alt={wrestler.name} className="w-full h-full object-contain border-2 border-zinc-500" />
                 </div>
-
+                <div className="w-96">
+                    {/* Basic Information */}
+                    <p className="">
+                        Gender:{" "}
+                        <span className={wrestler.gender === 'male' ?
+                            'text-blue-500' :
+                            wrestler.gender === 'female' ?
+                                'text-pink-500' :
+                                'text-violet-400'}>
+                            {wrestler.gender.charAt(0).toUpperCase() + wrestler.gender.slice(1)}
+                        </span>
+                    </p>
+                    <p className="">Age: {age} (Born on {months[wrestler.month_of_birth - 1]} of {wrestler.year_of_birth})</p>
+                    <p className=''>Nationality: {wrestler.nationality}</p>
+                    <p className="">Height (cm): {wrestler.height}</p>
+                    <p className="">Weight (Kg): {wrestler.weight}</p>
+                    <p className="">Finisher: {wrestler.finisher}</p>
+                    <p className="">Style: {wrestler.style}</p>
+                    <button className="bg-black hover:bg-zinc-700 text-white font-bold px-4 py-1 mt-2 border-zinc-500 border-2" onClick={handleClick}>Edit</button>
+                </div>
             </div>
-            {/* <p className="text-slate-400">Created At: {wrestler.created_at}</p> */}
-            {/* <p className="text-slate-400">Updated At: {wrestler.updated_at}</p> */}
+            {/* Line break */}
+            <div className='basis-full'></div>
             <div className='mx-4 flex'>
                 <div className='w-80 border-l-2 pl-2 border-t-2'>
                     <h3 className=' text-pretty text-slate-500'>Popularity</h3>

@@ -32,11 +32,11 @@ const customStyles = {
 
 function formatFileName(name) {
     if (name.length > 18) {
-      return '...' + name.slice(-15);
+        return '...' + name.slice(-15);
     } else {
-      return name;
+        return name;
     }
-  }
+}
 
 const WrestlerFormComponent = () => {
 
@@ -96,6 +96,8 @@ const WrestlerFormComponent = () => {
                     setWeight(wrestlerData.weight);
                     setFinisher(wrestlerData.finisher);
                     setStyle(wrestlerData.style);
+
+                    //setImage(wrestlerData.image);
 
                     setBrawl(wrestlerData.brawl);
                     setTechnical(wrestlerData.technical);
@@ -238,7 +240,7 @@ const WrestlerFormComponent = () => {
         formData.append('weight', weight);
         formData.append('finisher', finisher);
         //image should only be added if we are creating new wrestler
-        if (!id) formData.append('image', image);
+        if (image) formData.append('image', image);
         formData.append('style', style);
         formData.append('brawl', brawl);
         formData.append('technical', technical);
@@ -381,26 +383,51 @@ const WrestlerFormComponent = () => {
                                 Height (cm)
                             </label>
                             <label htmlFor="height" className="block text-sm font-medium text-slate-200">
-                                Height (ft)
+                                Height (ft & in)
                             </label>
                         </div>
-                        <div className="mt-1 flex w-full">
+                        <div className="mt-1 flex flex-row w-full">
                             <input
                                 className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
                                 type="number"
                                 name="height"
                                 id="height"
-                                value={height}
+                                value={isFocused ? height : parseInt(height).toFixed(1)}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
                                 onChange={(event) => setHeight(event.target.value)}
                             />
-                            <input
-                                className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-full sm:text-sm p-4 border-[1px] border-white"
-                                type="number"
-                                name="height_feet"
-                                id="height_feet"
-                                value={Math.round(height / 30.48 * 1000) / 1000}
-                                onChange={(event) => setHeight(event.target.value * 30.48)}
-                            />
+                            {/* MAKE THESE WHOLE NUMBERS */}
+                            <div className='flex flex-row'>
+                                <input
+                                    className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm p-4 border-y-[1px] border-white"
+                                    type="number"
+                                    step="1"
+                                    name="height_feet"
+                                    id="height_feet"
+                                    //value={isFocused ? height/30.48 : (height / 30.48).toFixed(0)}      
+                                    value={Math.floor(height / 30.48)}
+                                    onChange={(event) => {
+                                        const feet = event.target.value;
+                                        const inches = (height / 30.48 - Math.floor(height / 30.48)) * 12;
+                                        setHeight((feet * 30.48) + (inches * 2.54));
+                                    }}
+                                />
+                                <input
+                                    className="bg-black text-white shadow-sm focus:ring-zinc-500 focus:border-zinc-500 block w-1/2 sm:text-sm p-4 border-y-[1px] border-r-[1px] border-white"
+                                    type="number"
+                                    step="1"
+                                    name="height_plus_inches"
+                                    id="height_plus_inches"
+                                    //value={isFocused ? (height / 30.48 - Math.floor(height / 30.48)) * 12 : ((height / 30.48 - Math.floor(height / 30.48)) * 12).toFixed(0)}
+                                    value={Math.round((height / 30.48 - Math.floor(height / 30.48)) * 12)}
+                                    onChange={(event) => {
+                                        const inches = event.target.value;
+                                        const feet = Math.floor(height / 30.48);
+                                        setHeight((feet * 30.48) + (inches * 2.54));
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className='w-96'>
@@ -427,7 +454,7 @@ const WrestlerFormComponent = () => {
                                 type="number"
                                 name="weight_lbs"
                                 id="weight_lbs"
-                                value={Math.round(weight * 2.20462 * 1000) / 1000}
+                                value={Math.round(weight * 2.20462 * 100) / 100}
                                 onChange={(event) => setWeight(event.target.value / 2.20462)}
                             />
                         </div>
@@ -501,7 +528,7 @@ const WrestlerFormComponent = () => {
                                         <a className="mt-2 text-base leading-normal px-1">Select a file</a>
                                     </div>
                                     <a className="leading-normal text-zinc-800 p-2">{image ? formatFileName(image.name) : ''}</a>
-                                    <input type='file' className="hidden" onChange={(event) => setImage(event.target.files[0])}/>
+                                    <input type='file' className="hidden" onChange={(event) => setImage(event.target.files[0])} />
                                 </label>
                             </div>
                         </div>

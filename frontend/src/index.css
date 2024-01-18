@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-    background: #202020;
-    color: white;
+    background: rgb(39 39 42);
     font-family: 'Courier New', Courier, monospace;
+    color: white;
 }
 
 input {

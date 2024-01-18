@@ -18,20 +18,30 @@ const WrestlerCard = ({ wrestler }) => {
 
     return (
         <div
-            className="bg-black p-3 hover:bg-zinc-700 hover:cursor-pointer rounded-r-md border-2 border-zinc-700 w-[480px]"
+            className="bg-black p-3 text-white hover:bg-white hover:text-black hover:cursor-pointer w-[480px] border-zinc-800 border-2"
             onClick={handleClick}
+            style={{clipPath: 'polygon(0 10%, 10% 0, 100% 0, 100% 100%, 0% 100%)'}}
         >
             <div className="flex justify-between">
                 <div>
-                    <p className="text-white font-bold uppercase rounded-lg">{wrestler.name}</p>
-                    <p className="text-zinc-400">Age: {age} ({months[wrestler.month_of_birth - 1]} of {wrestler.year_of_birth})</p>
-                    <p className="text-zinc-400">Gender: {wrestler.gender.charAt(0).toUpperCase() + wrestler.gender.slice(1)}</p>
-                    <p className="text-zinc-400">Weight (Kg): {wrestler.weight}</p>
-                    <p className="text-zinc-400">Height (cm): {wrestler.height}</p>
-                    <p className="text-zinc-400">Country: {wrestler.nationality}</p>
+                    <p className="font-bold uppercase rounded-lg">{wrestler.name}</p>
+                    <p className="">Age: {age} ({months[wrestler.month_of_birth - 1]} of {wrestler.year_of_birth})</p>
+                    <p className="">
+                        Gender:{" "}
+                        <span className={wrestler.gender === 'male' ?
+                            'text-blue-500' :
+                            wrestler.gender === 'female' ?
+                                'text-pink-500' :
+                                'text-violet-400'}>
+                            {wrestler.gender.charAt(0).toUpperCase() + wrestler.gender.slice(1)}
+                        </span>
+                    </p>
+                    <p className="">Weight: {wrestler.weight} Kg.({Math.round(wrestler.weight * 2.20462 * 10) / 10} Lbs.)</p>
+                    <p className="">Height: {wrestler.height} cm.({Math.round(wrestler.height / 30.48)}'{Math.round((wrestler.height / 30.48 - Math.floor(wrestler.height / 30.48)) * 12)}")</p>
+                    <p className="">Country: {wrestler.nationality}</p>
                 </div>
-                <div>
-                    <img className="w-36 h-36 rounded-r-md border-2 border-zinc-700" src={wrestler.image} alt="Wrestler Image" />
+                <div className='w-36 h-36'>
+                    <img className=" w-full h-full object-contain rounded-r-md border-2 border-zinc-700" src={wrestler.image} alt="Wrestler Image" />
                 </div>
             </div>
         </div>

@@ -16,7 +16,8 @@ function App() {
         <Route path="/wrestlers/:id/edit" element={<WrestlerFormPage />} />
         <Route path="/wrestlers/:id" element={<WrestlerDetailPage />} />
         <Route path="/companies" element={<CompaniesPage />} />
-        <Route path="/company-create" element={<CompaniesPage />} />
+        {/* FUTURE ME: REMEMBER TO CHANGE THE PAGE IN THE /company-create ROUTE*/}
+        <Route path="/company-create" element={<CompaniesPage />} /> 
       </Routes>
     </BrowserRouter>
   );
